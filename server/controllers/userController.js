@@ -1,16 +1,28 @@
-// controllers/userController.js
+
 const UserModel = require('../models/User');
+const bcrypt = require('bcrypt');
+const { validationResult } = require('express-validator');
 
 // Create a new user
 exports.createUser = async (req, res) => {
   const { name, email, password, permissions, roles, status } = req.body;
+
+  // Validate input
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   try {
     const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "Email already exists" });
     }
 
-    const newUser = new UserModel({ name, email, password, permissions, roles, status });
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new UserModel({ name, email, password: hashedPassword, permissions, roles, status });
     await newUser.save();
     res.status(201).json({ message: "User created successfully", user: newUser });
   } catch (err) {
@@ -31,7 +43,7 @@ exports.getAllUsers = async (req, res) => {
 // Get a single user by ID
 exports.getUserById = async (req, res) => {
   try {
-    const user = await UserModel.findById(req.params.id);
+    const user = await UserModel.findById(req.params.id).populate("roles");
     if (user) {
       res.status(200).json(user);
     } else {
@@ -45,10 +57,20 @@ exports.getUserById = async (req, res) => {
 // Update a user by ID
 exports.updateUser = async (req, res) => {
   const { name, email, password, permissions, roles, status } = req.body;
+
+  // Validate input
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   try {
+    // Hash the password if it has been changed
+    const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
+
     const updatedUser = await UserModel.findByIdAndUpdate(
       req.params.id,
-      { name, email, password, permissions, roles, status },
+      { name, email, password: hashedPassword, permissions, roles, status },
       { new: true }
     ).populate("roles");
 
@@ -75,3 +97,4 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+

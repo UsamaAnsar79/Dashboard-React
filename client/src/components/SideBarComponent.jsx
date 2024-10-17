@@ -9,7 +9,7 @@ import { LuUser } from "react-icons/lu";
 import { SiPolywork } from "react-icons/si";
 import { IoAccessibilityOutline } from "react-icons/io5";
 import { toggleSidebar, toggleExpand, setActiveItem } from "../actions/sidebarActions";
-import "./index.css"; // Custom CSS styles for SidebarComponent
+import "./index.css"; 
 
 const SideBarComponent = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const SideBarComponent = () => {
     { path: "/home", icon: <BsAlarm />, label: "Event Manager" },
     { path: "/roles", icon: <SiPolywork />, label: "Roles" },
     { path: "/permissions", icon: <IoAccessibilityOutline />, label: "Permissions" },
-    // { path: "/users", icon: <LuUser />, label: "User" },
+    { path: "/users", icon: <LuUser />, label: "User" },
   ];
 
   return (
