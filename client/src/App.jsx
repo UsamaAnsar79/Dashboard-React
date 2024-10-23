@@ -10,6 +10,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Permissions from './components/Permission/Permissions';
 import Roles from './components/Roles/Roles';
 import UserTable from './components/User/User';
+import Month from './components/Calendar/Month';
+import { EventProvider } from './components/Calendar/EventContext';
+
 
 const App = () => {
 
@@ -19,6 +22,7 @@ const App = () => {
         <NavBarComponent />
         {/* <SideBarComponent /> */}
         </>
+     
     <Router>
       <Routes>
       <Route path='/' element={<Navigate replace to="/login" />} />
@@ -56,8 +60,20 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-      </Routes>
+     
+      <Route
+          path="/month"
+          element={
+            <ProtectedRoute>
+              <EventProvider>
+              <Month />
+              </EventProvider>
+            </ProtectedRoute>
+          }
+        />
+     </Routes>
     </Router>
+    
     </div>
   );
 };

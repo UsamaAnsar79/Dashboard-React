@@ -29,7 +29,7 @@ const SideBarComponent = () => {
   // Sidebar menu items
   const menuItems = [
     { path: "/dashboard", icon: <HiOutlineChartPie />, label: "Dashboard" },
-    { path: "/home", icon: <BsAlarm />, label: "Event Manager" },
+    { path: "/month", icon: <BsAlarm />, label: "Calendar" },
     { path: "/roles", icon: <SiPolywork />, label: "Roles" },
     { path: "/permissions", icon: <IoAccessibilityOutline />, label: "Permissions" },
     { path: "/users", icon: <LuUser />, label: "User" },

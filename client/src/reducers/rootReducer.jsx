@@ -6,12 +6,14 @@ import rolesReducer from './rolesReducer';
 import userReducer from './userReducer';
 
 
+
 const rootReducer = combineReducers({
     auth: authReducer,
     sidebar: sidebarReducer,
     permissions:permissionsReducer,
     roles:rolesReducer,
-    user:userReducer
+    user:userReducer,
+
 });
 
 export default rootReducer;

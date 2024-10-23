@@ -8,6 +8,7 @@ const { MONGO_URI } = require('./config/db');
 const permissionsRoutes = require('./routes/permissions');
 const roleRoutes = require('./routes/roleRoutes');
 const userRoutes =require('./routes/userRoutes')
+const eventRoutes = require('./routes/eventRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,6 +28,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api', permissionsRoutes);
 app.use('/roles', roleRoutes);
 app.use('/api', userRoutes);
+app.use('/api/events', eventRoutes);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
